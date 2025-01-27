@@ -71,6 +71,7 @@ local function accept(ctx, item, callback)
       if item.insertTextFormat == vim.lsp.protocol.InsertTextFormat.Snippet then
         assert(ctx.mode == 'default', 'Snippets are only supported in default mode')
 
+        item.textEdit.newText = item.textEdit.newText:gsub("${0:", "${1:")
         -- We want to handle offset_encoding and the text edit api can do this for us
         -- so we empty the newText and apply
         local temp_text_edit = vim.deepcopy(item.textEdit)
